@@ -1,4 +1,4 @@
-.dkui-popover {
+.blearui-popover {
   position: absolute;
   top: 0;
   left: 0;
@@ -6,59 +6,59 @@
   border: 1px solid #ccc;
   background: #fff;
   border-radius: 6px; }
-  .dkui-popover-arrow {
+  .blearui-popover-arrow {
     display: none;
     position: absolute; }
-    .dkui-popover-arrow:before,
-    .dkui-popover-arrow:after {
+    .blearui-popover-arrow:before,
+    .blearui-popover-arrow:after {
       position: absolute;
       content: "";
       border: 10px solid transparent; }
-    .dkui-popover-arrow-top {
+    .blearui-popover-arrow-top {
       top: -20px;
       left: 0; }
-      .dkui-popover-arrow-top:before,
-      .dkui-popover-arrow-top:after {
+      .blearui-popover-arrow-top:before,
+      .blearui-popover-arrow-top:after {
         left: 0; }
-      .dkui-popover-arrow-top:before {
+      .blearui-popover-arrow-top:before {
         top: -1px;
         border-bottom-color: #bbb; }
-      .dkui-popover-arrow-top:after {
+      .blearui-popover-arrow-top:after {
         top: 0;
         border-bottom-color: #fff; }
-    .dkui-popover-arrow-right {
+    .blearui-popover-arrow-right {
       top: 0;
       right: 0; }
-      .dkui-popover-arrow-right:before,
-      .dkui-popover-arrow-right:after {
+      .blearui-popover-arrow-right:before,
+      .blearui-popover-arrow-right:after {
         top: 0; }
-      .dkui-popover-arrow-right:before {
+      .blearui-popover-arrow-right:before {
         left: 1px;
         border-left-color: #bbb; }
-      .dkui-popover-arrow-right:after {
+      .blearui-popover-arrow-right:after {
         left: 0;
         border-left-color: #fff; }
-    .dkui-popover-arrow-bottom {
+    .blearui-popover-arrow-bottom {
       bottom: 0;
       left: 0; }
-      .dkui-popover-arrow-bottom:before,
-      .dkui-popover-arrow-bottom:after {
+      .blearui-popover-arrow-bottom:before,
+      .blearui-popover-arrow-bottom:after {
         left: 0; }
-      .dkui-popover-arrow-bottom:before {
+      .blearui-popover-arrow-bottom:before {
         top: 1px;
         border-top-color: #bbb; }
-      .dkui-popover-arrow-bottom:after {
+      .blearui-popover-arrow-bottom:after {
         top: 0;
         border-top-color: #fff; }
-    .dkui-popover-arrow-left {
+    .blearui-popover-arrow-left {
       top: 0;
       left: -20px; }
-      .dkui-popover-arrow-left:before,
-      .dkui-popover-arrow-left:after {
+      .blearui-popover-arrow-left:before,
+      .blearui-popover-arrow-left:after {
         top: 0; }
-      .dkui-popover-arrow-left:before {
+      .blearui-popover-arrow-left:before {
         left: -1px;
         border-right-color: #bbb; }
-      .dkui-popover-arrow-left:after {
+      .blearui-popover-arrow-left:after {
         left: 0;
         border-right-color: #fff; }
