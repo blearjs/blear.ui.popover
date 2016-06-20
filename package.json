@@ -42,10 +42,13 @@
     "blear.core.modification": "1.x",
     "blear.utils.object": "1.x",
     "blear.utils.typeis": "1.x",
-    "blear.utils.array": "1.x"
+    "blear.utils.array": "1.x",
+    "blear.utils.function": "1.x"
   },
   "devDependencies": {
-
+    "blear.core.selector": "^1.0.2",
+    "blear.utils.array": "^1.0.6",
+    "coolie.js": "^2.0.18"
   },
   "license": "MIT"
 }

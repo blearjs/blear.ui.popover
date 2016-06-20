@@ -1,0 +1,101 @@
+<!doctype html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2016-06-20 21:21
+ -->
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>popover</title>
+    <style>
+        .btn {
+            position: absolute;
+            font-size: 16px;
+            padding: 5px 10px;
+            border: 1px solid #2254ff;
+            background: #2254ff;
+            color: #fff;
+        }
+
+        .btn_top_left {
+            top: 0;
+            left: 0;
+        }
+
+        .btn_top_center {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .btn_top_right {
+            top: 0;
+            right: 0;
+        }
+
+        .btn_top_right_middle {
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
+
+        .btn_bottom_right {
+            bottom: 0;
+            right: 0;
+        }
+
+        .btn_bottom_center {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .btn_bottom_left {
+            bottom: 0;
+            left: 0;
+        }
+
+        .btn_bottom_left_middle {
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        .btn_center_middle {
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
+</head>
+<body ontouchstart="">
+
+<button class="btn btn_top_left">点我显示 popover</button>
+<button class="btn btn_top_center">点我显示 popover</button>
+<button class="btn btn_top_right">点我显示 popover</button>
+<button class="btn btn_top_right_middle">点我显示 popover</button>
+<button class="btn btn_bottom_right">点我显示 popover</button>
+<button class="btn btn_bottom_center">点我显示 popover</button>
+<button class="btn btn_bottom_left">点我显示 popover</button>
+<button class="btn btn_bottom_left_middle">点我显示 popover</button>
+<button class="btn btn_center_middle">点我显示 popover</button>
+
+
+
+<script src="/node_modules/coolie.js/coolie.js"
+data-config="/example/coolie-config.js"
+data-main="index.js"></script>
+
+</body>
+</html>

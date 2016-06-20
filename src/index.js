@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * 位置弹出框
  * @author ydr.me
  * @create 2016-05-10 14:18
  */
@@ -8,15 +8,16 @@
 
 'use strict';
 
-var UI =           require('blear.ui');
-var selector =     require('blear.core.selector');
-var layout =       require('blear.core.layout');
-var attribute =    require('blear.core.attribute');
+var UI = require('blear.ui');
+var selector = require('blear.core.selector');
+var layout = require('blear.core.layout');
+var attribute = require('blear.core.attribute');
 var modification = require('blear.core.modification');
-var object =       require('blear.utils.object');
-var typeis =       require('blear.utils.typeis');
-var array =        require('blear.utils.array');
-var template =     require('./template.html', 'html');
+var object = require('blear.utils.object');
+var typeis = require('blear.utils.typeis');
+var array = require('blear.utils.array');
+var fun = require('blear.utils.function');
+var template = require('./template.html', 'html');
 
 var win = window;
 var doc = win.document;
@@ -135,13 +136,34 @@ var Popover = UI.extend({
 
 
     /**
+     * 设置 HTML
+     * @param html {String|Node}
+     * @returns {HTMLElement}
+     */
+    setHTML: function (html) {
+        var the = this;
+
+        if (typeis.String(html)) {
+            attribute.html(the[_contentEl], html);
+        } else if (html && html.nodeType) {
+            modification.empty(the[_contentEl]);
+            modification.insert(html, the[_contentEl]);
+        }
+
+        return selector.children(the[_contentEl])[0];
+    },
+
+
+    /**
      * 打开弹出泡
-     * @param target
+     * @param target {Object} 目标，可以是一个事件，也可以是一个包含 left/top 的位置坐标
+     * @param [callback]
      * @returns {Popover}
      */
-    open: function (target) {
+    open: function (target, callback) {
         var the = this;
         var options = the[_options];
+        callback = fun.noop(callback);
 
         // 1. 计算窗口位置
         the[_documentPosition] = {
@@ -252,6 +274,7 @@ var Popover = UI.extend({
         the[_visible] = true;
         options.openAnimation.call(the, to, function () {
             the.emit('afterOpen');
+            callback.call(the);
         });
 
         return the;
@@ -262,9 +285,10 @@ var Popover = UI.extend({
      * 关闭弹出泡
      * @returns {Popover}
      */
-    close: function () {
+    close: function (callback) {
         var the = this;
         var options = the[_options];
+        callback = fun.noop(callback);
 
         if (!the[_visible]) {
             return the;
@@ -281,9 +305,28 @@ var Popover = UI.extend({
         the[_visible] = false;
         options.closeAnimation.call(the, to, function () {
             the.emit('afterClose');
+            callback.call(the);
         });
 
         return the;
+    },
+
+
+    /**
+     * 销毁实例
+     * @param callback
+     */
+    destroy: function (callback) {
+        var the = this;
+        callback = fun.noop(callback);
+
+        fun.until(function () {
+            modification.remove(the[_popoverEl]);
+            callback.call(the);
+            Popover.parent.destroy(the);
+        }, function () {
+            return the[_visible] === false;
+        });
     }
 });
 var pro = Popover.prototype;
