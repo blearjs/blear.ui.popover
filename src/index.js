@@ -313,6 +313,15 @@ var Popover = UI.extend({
 
 
     /**
+     * 当前是否可见
+     * @returns {Boolean}
+     */
+    isVisible: function () {
+        return this[_visible];
+    },
+
+
+    /**
      * 销毁实例
      * @param callback
      */
