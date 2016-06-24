@@ -97,7 +97,7 @@ var defaults = {
      * @param done
      */
     openAnimation: function (to, done) {
-        var el = this.getElement();
+        var el = this.getPopoverEl();
         attribute.style(el, to);
         done();
     },
@@ -109,7 +109,7 @@ var defaults = {
      * @param done
      */
     closeAnimation: function (to, done) {
-        var el = this.getElement();
+        var el = this.getPopoverEl();
         attribute.style(el, to);
         done();
     }
@@ -127,10 +127,10 @@ var Popover = UI.extend({
 
 
     /**
-     * 获取当前元素
+     * 获取弹出元素
      * @returns {HTMLElement}
      */
-    getElement: function () {
+    getPopoverEl: function () {
         return this[_popoverEl];
     },
 
