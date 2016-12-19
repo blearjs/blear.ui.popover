@@ -1,6 +1,6 @@
 {
   "name": "blear.ui.popover",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "箭头指示弹出层 UI",
   "scripts": {
     "live": "browser-sync start --config bs-config.js"
@@ -33,8 +33,7 @@
   "bugs": {
     "url": "https://github.com/blearjs/blear.ui.popover/issues"
   },
-  "dependencies": {},
-  "peerDependencies": {
+  "dependencies": {
     "blear.ui": "1.x",
     "blear.core.selector": "1.x",
     "blear.core.layout": "1.x",
@@ -45,6 +44,7 @@
     "blear.utils.array": "1.x",
     "blear.utils.function": "1.x"
   },
+  "peerDependencies": {},
   "devDependencies": {
     "blear.core.selector": "^1.0.2",
     "blear.utils.array": "^1.0.6",
