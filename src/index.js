@@ -136,6 +136,15 @@ var Popover = UI.extend({
 
 
     /**
+     * 内容区域
+     * @returns {*}
+     */
+    getContentEl: function () {
+        return this[_contentEl];
+    },
+
+
+    /**
      * 设置 HTML
      * @param html {String|Node}
      * @returns {HTMLElement}
@@ -163,7 +172,7 @@ var Popover = UI.extend({
     open: function (target, callback) {
         var the = this;
         var options = the[_options];
-        callback = fun.noop(callback);
+        callback = fun.ensure(callback);
 
         // 1. 计算窗口位置
         the[_documentPosition] = {
@@ -288,7 +297,7 @@ var Popover = UI.extend({
     close: function (callback) {
         var the = this;
         var options = the[_options];
-        callback = fun.noop(callback);
+        callback = fun.ensure(callback);
 
         if (!the[_visible]) {
             return the;
@@ -327,7 +336,7 @@ var Popover = UI.extend({
      */
     destroy: function (callback) {
         var the = this;
-        callback = fun.noop(callback);
+        callback = fun.ensure(callback);
 
         fun.until(function () {
             modification.remove(the[_popoverEl]);
