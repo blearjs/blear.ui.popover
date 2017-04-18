@@ -177,8 +177,8 @@ var Popover = UI.extend({
             the[_targetPosition] = {
                 width: layout.outerWidth(target),
                 height: layout.outerHeight(target),
-                left: layout.offsetLeft(target),
-                top: layout.offsetTop(target)
+                left: layout.clientLeft(target),
+                top: layout.clientTop(target)
             };
         }
         // event
@@ -389,6 +389,16 @@ pro[_calPopoverPositionByAlign] = function (dir, priority) {
     var pos = {};
     var firstSide;
     var secondSide;
+    var optionsOffsetLeft = options.offsetLeft;
+    var optionsOffsetTop = options.offsetTop;
+    var optionsArrowSize = options.arrowSize;
+    var targetPositionLeft = targetPosition.left;
+    var targetPositionTop = targetPosition.top;
+    var targetPositionWidth = targetPosition.width;
+    var targetPositionHeight = targetPosition.height;
+    var popoverPositionWidth = popoverPosition.width;
+    var popoverPositionHeight = popoverPosition.height;
+
     /**
      * 靠边检测
      * @param type
@@ -419,16 +429,16 @@ pro[_calPopoverPositionByAlign] = function (dir, priority) {
 
         switch (type) {
             case 'left':
-                pos[type] += options.offsetLeft;
+                pos[type] += optionsOffsetLeft;
                 break;
             case 'right':
-                pos[type] -= options.offsetLeft;
+                pos[type] -= optionsOffsetLeft;
                 break;
             case 'top':
-                pos[type] += options.offsetTop;
+                pos[type] += optionsOffsetTop;
                 break;
             case 'bottom':
-                pos[type] -= options.offsetTop;
+                pos[type] -= optionsOffsetTop;
                 break;
         }
     };
@@ -436,52 +446,52 @@ pro[_calPopoverPositionByAlign] = function (dir, priority) {
     if (priority === 'center') {
         switch (dir) {
             case 'bottom':
-                pos.left = targetPosition.left + targetPosition.width / 2 - popoverPosition.width / 2;
-                pos.top = targetPosition.top + targetPosition.height + options.arrowSize + options.offsetTop;
+                pos.left = targetPositionLeft + targetPositionWidth / 2 - popoverPositionWidth / 2;
+                pos.top = targetPositionTop + targetPositionHeight + optionsArrowSize + optionsOffsetTop;
                 break;
 
             case 'right':
-                pos.left = targetPosition.left + targetPosition.width + options.arrowSize + options.offsetLeft;
-                pos.top = targetPosition.top + targetPosition.height / 2 - popoverPosition.height / 2;
+                pos.left = targetPositionLeft + targetPositionWidth + optionsArrowSize + optionsOffsetLeft;
+                pos.top = targetPositionTop + targetPositionHeight / 2 - popoverPositionHeight / 2;
                 break;
 
             case 'top':
-                pos.left = targetPosition.left + targetPosition.width / 2 - popoverPosition.width / 2;
-                pos.top = targetPosition.top - options.arrowSize - popoverPosition.height - options.offsetTop;
+                pos.left = targetPositionLeft + targetPositionWidth / 2 - popoverPositionWidth / 2;
+                pos.top = targetPositionTop - optionsArrowSize - popoverPositionHeight - optionsOffsetTop;
                 break;
 
             case 'left':
-                pos.left = targetPosition.left - options.arrowSize - popoverPosition.width - options.offsetLeft;
-                pos.top = targetPosition.top + targetPosition.height / 2 - popoverPosition.height / 2;
+                pos.left = targetPositionLeft - optionsArrowSize - popoverPositionWidth - optionsOffsetLeft;
+                pos.top = targetPositionTop + targetPositionHeight / 2 - popoverPositionHeight / 2;
                 break;
         }
     } else {
         switch (dir) {
             case 'bottom':
-                pos.top = targetPosition.top + targetPosition.height + options.arrowSize + options.offsetTop;
-                firstSide = targetPosition.left;
-                secondSide = targetPosition.left + targetPosition.width - popoverPosition.width;
+                pos.top = targetPositionTop + targetPositionHeight + optionsArrowSize + optionsOffsetTop;
+                firstSide = targetPositionLeft;
+                secondSide = targetPositionLeft + targetPositionWidth - popoverPositionWidth;
                 sideCheck('left', firstSide, secondSide);
                 break;
 
             case 'right':
-                pos.left = targetPosition.left + targetPosition.width + options.arrowSize + options.offsetLeft;
-                firstSide = targetPosition.top;
-                secondSide = targetPosition.top + targetPosition.height - popoverPosition.height;
+                pos.left = targetPositionLeft + targetPositionWidth + optionsArrowSize + optionsOffsetLeft;
+                firstSide = targetPositionTop;
+                secondSide = targetPositionTop + targetPositionHeight - popoverPositionHeight;
                 sideCheck('top', firstSide, secondSide);
                 break;
 
             case 'top':
-                pos.top = targetPosition.top - popoverPosition.height - options.arrowSize - options.offsetTop;
-                firstSide = targetPosition.left;
-                secondSide = targetPosition.left + targetPosition.width - popoverPosition.width;
+                pos.top = targetPositionTop - popoverPositionHeight - optionsArrowSize - optionsOffsetTop;
+                firstSide = targetPositionLeft;
+                secondSide = targetPositionLeft + targetPositionWidth - popoverPositionWidth;
                 sideCheck('left', firstSide, secondSide);
                 break;
 
             case 'left':
-                pos.left = targetPosition.left - options.arrowSize - popoverPosition.width - options.offsetLeft;
-                firstSide = targetPosition.top;
-                secondSide = targetPosition.top + targetPosition.height - popoverPosition.height;
+                pos.left = targetPositionLeft - optionsArrowSize - popoverPositionWidth - optionsOffsetLeft;
+                firstSide = targetPositionTop;
+                secondSide = targetPositionTop + targetPositionHeight - popoverPositionHeight;
                 sideCheck('top', firstSide, secondSide);
                 break;
         }
@@ -533,12 +543,17 @@ pro[_calArrowPosition] = function (side, dir) {
     var pos = {
         display: 'block'
     };
+    var optionsArrowSize = options.arrowSize;
+    var targetPositionWidth = targetPosition.width;
+    var targetPositionHeight = targetPosition.height;
+    var popoverPositionWidth = popoverPosition.width;
+    var popoverPositionHeight = popoverPosition.height;
 
     object.each(map, function (key, el) {
         attribute.hide(el);
     });
 
-    if (!options.arrowSize) {
+    if (!optionsArrowSize) {
         return;
     }
 
@@ -547,36 +562,36 @@ pro[_calArrowPosition] = function (side, dir) {
         case 'bottom':
             switch (side) {
                 case 0:
-                    pos.left = targetPosition.width / 2;
+                    pos.left = targetPositionWidth / 2;
                     break;
 
                 case 1:
-                    pos.left = popoverPosition.width - targetPosition.width / 2;
+                    pos.left = popoverPositionWidth - targetPositionWidth / 2;
                     break;
 
                 default:
-                    pos.left = popoverPosition.width / 2;
+                    pos.left = popoverPositionWidth / 2;
                     break;
             }
-            pos.left -= options.arrowSize;
+            pos.left -= optionsArrowSize;
             break;
 
         case 'right':
         case 'left':
             switch (side) {
                 case 0:
-                    pos.top = targetPosition.height / 2;
+                    pos.top = targetPositionHeight / 2;
                     break;
 
                 case 1:
-                    pos.top = popoverPosition.height - targetPosition.height / 2;
+                    pos.top = popoverPositionHeight - targetPositionHeight / 2;
                     break;
 
                 default:
-                    pos.top = popoverPosition.height / 2;
+                    pos.top = popoverPositionHeight / 2;
                     break;
             }
-            pos.top -= options.arrowSize;
+            pos.top -= optionsArrowSize;
             break;
     }
 
