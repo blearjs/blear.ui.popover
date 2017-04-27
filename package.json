@@ -1,6 +1,6 @@
 {
   "name": "blear.ui.popover",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "箭头指示弹出层 UI",
   "scripts": {
     "live": "browser-sync start --config bs-config.js"
