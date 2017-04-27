@@ -29,6 +29,12 @@ var DEFAULT_ALIGN_LIST = ['center', 'side'];
 var gid = 0;
 var defaults = {
     /**
+     * 元素
+     * @type HTMLElement | String
+     */
+    el: '',
+
+    /**
      * 箭头位置：auto，检测顺序为以及可选值还有：bottom、right、top、left
      * @type String
      */
@@ -371,7 +377,7 @@ var _calArrowPosition = Popover.sole();
 pro[_initNode] = function () {
     var the = this;
     var node = modification.parse(template);
-
+    var el = selector.query(the[_options].el)[0];
     node.id = namespace + (gid++);
     attribute.addClass(node, the[_options].addClass);
     the[_popoverEl] = modification.insert(node);
@@ -381,6 +387,10 @@ pro[_initNode] = function () {
     the[_arrorBottomEl] = children[2];
     the[_arrorLeftEl] = children[3];
     the[_contentEl] = children[4];
+
+    if (el) {
+        the.setHTML(el);
+    }
 };
 
 
