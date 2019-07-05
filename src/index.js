@@ -36,10 +36,10 @@ var defaults = {
     el: '',
 
     /**
-     * 箭头位置：auto，检测顺序为以及可选值还有：bottom、right、top、left
-     * @type String
+     * 是否显示监听
+     * @type Boolean
      */
-    arrowPosition: 'auto',
+    arrow: true,
 
     /**
      * 对齐顺序：center、side
@@ -225,10 +225,7 @@ var Popover = UI.extend({
 
         // 4. 第一优先级的位置，如果全部位置都不符合，则选择第一优先级的位置
         // popup 位置顺序
-        var arrowPosition = options.arrowPosition;
-        var dirList = arrowPosition === 'auto' || arrowPosition === 'none' ?
-            DEFAULT_POSITION_LIST :
-            [arrowPosition];
+        var dirList = DEFAULT_POSITION_LIST;
         // 优先级顺序
         var alignList = options.align === 'center' ? DEFAULT_ALIGN_LIST : ['side'];
         var arrowMap = {
@@ -412,7 +409,7 @@ pro[_calPopoverPositionByAlign] = function (dir, priority) {
     var targetPositionHeight = targetPosition.height;
     var popoverPositionWidth = popoverPosition.width;
     var popoverPositionHeight = popoverPosition.height;
-    var displayArrowSize = options.arrowPosition === 'none' ? 0 : arrowSize;
+    var displayArrowSize = options.arrow ? arrowSize : 0;
 
     /**
      * 靠边检测
@@ -559,7 +556,7 @@ pro[_calArrowPosition] = function (side, dir) {
     var targetPositionHeight = targetPosition.height;
     var popoverPositionWidth = popoverPosition.width;
     var popoverPositionHeight = popoverPosition.height;
-    var displayArrowSize = options.arrowPosition === 'none' ? 0 : arrowSize;
+    var displayArrowSize = options.arrow ? arrowSize : 0;
 
     object.each(map, function (key, el) {
         attribute.hide(el);
@@ -603,7 +600,7 @@ pro[_calArrowPosition] = function (side, dir) {
             break;
     }
 
-    if (options.arrowPosition !== 'none') {
+    if (options.arrow) {
         attribute.style(map[dir], pos);
     }
 };

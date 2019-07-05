@@ -13,9 +13,8 @@ var selector = require('blear.core.selector');
 var array = require('blear.utils.array');
 
 var pp = new Popover({
-    width: 'auto',
-    height: 'auto',
-    arrowPosition: 'none'
+    width: 200,
+    height: 400
 });
 
 pp.setHTML('呵呵哒');
