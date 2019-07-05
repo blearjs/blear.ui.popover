@@ -14,7 +14,8 @@ var array = require('blear.utils.array');
 
 var pp = new Popover({
     width: 'auto',
-    height: 'auto'
+    height: 'auto',
+    arrowPosition: 'none'
 });
 
 pp.setHTML('呵呵哒');

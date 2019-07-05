@@ -27,6 +27,7 @@ var DEFAULT_POSITION_LIST = ['bottom', 'top', 'right', 'left'];
 // 默认的对齐顺序
 var DEFAULT_ALIGN_LIST = ['center', 'side'];
 var gid = 0;
+var arrowSize = 10;
 var defaults = {
     /**
      * 元素
@@ -39,12 +40,6 @@ var defaults = {
      * @type String
      */
     arrowPosition: 'auto',
-
-    /**
-     * 箭头的尺寸
-     * @type Number
-     */
-    arrowSize: 10,
 
     /**
      * 对齐顺序：center、side
@@ -178,12 +173,13 @@ var Popover = UI.extend({
     open: function (target, callback) {
         var the = this;
         var options = the[_options];
+
         callback = fun.ensure(callback);
 
         // 1. 计算窗口位置
         the[_documentPosition] = {
-            width: layout.outerWidth(doc),
-            height: layout.outerHeight(doc)
+            width: layout.outerWidth(win),
+            height: layout.outerHeight(win)
         };
 
         // 2. 计算目标位置
@@ -226,11 +222,13 @@ var Popover = UI.extend({
             height: layout.outerHeight(the[_popoverEl])
         };
 
+
         // 4. 第一优先级的位置，如果全部位置都不符合，则选择第一优先级的位置
         // popup 位置顺序
-        var dirList = options.arrowPosition === 'auto' ?
+        var arrowPosition = options.arrowPosition;
+        var dirList = arrowPosition === 'auto' || arrowPosition === 'none' ?
             DEFAULT_POSITION_LIST :
-            [options.arrowPosition];
+            [arrowPosition];
         // 优先级顺序
         var alignList = options.align === 'center' ? DEFAULT_ALIGN_LIST : ['side'];
         var arrowMap = {
@@ -274,6 +272,7 @@ var Popover = UI.extend({
         attribute.style(the[_popoverEl], {
             visibility: 'visible'
         });
+
         the[_calArrowPosition](findPos._side, findArrow);
 
         // 6. 动画
@@ -282,11 +281,9 @@ var Popover = UI.extend({
             left: findPos.left
         };
 
-        if (the.emit('beforeOpen', to) === false) {
-            return the;
-        }
-
+        the.emit('beforeOpen', to);
         the[_visible] = true;
+        the.emit('open');
         options.openAnimation.call(the, to, function () {
             the.emit('afterOpen');
             callback.call(the);
@@ -313,11 +310,9 @@ var Popover = UI.extend({
             display: 'none'
         };
 
-        if (the.emit('beforeClose', to) === false) {
-            return the;
-        }
-
+        the.emit('beforeClose', to);
         the[_visible] = false;
+        the.emit('close');
         options.closeAnimation.call(the, to, function () {
             the.emit('afterClose');
             callback.call(the);
@@ -354,21 +349,22 @@ var Popover = UI.extend({
     }
 });
 var pro = Popover.prototype;
-var _options = Popover.sole();
-var _visible = Popover.sole();
-var _initNode = Popover.sole();
-var _popoverEl = Popover.sole();
-var _arrorTopEl = Popover.sole();
-var _arrorRightEl = Popover.sole();
-var _arrorBottomEl = Popover.sole();
-var _arrorLeftEl = Popover.sole();
-var _contentEl = Popover.sole();
-var _documentPosition = Popover.sole();
-var _targetPosition = Popover.sole();
-var _popoverPosition = Popover.sole();
-var _calPopoverPositionByAlign = Popover.sole();
-var _boundaryCheck = Popover.sole();
-var _calArrowPosition = Popover.sole();
+var sole = Popover.sole;
+var _options = sole();
+var _visible = sole();
+var _initNode = sole();
+var _popoverEl = sole();
+var _arrorTopEl = sole();
+var _arrorRightEl = sole();
+var _arrorBottomEl = sole();
+var _arrorLeftEl = sole();
+var _contentEl = sole();
+var _documentPosition = sole();
+var _targetPosition = sole();
+var _popoverPosition = sole();
+var _calPopoverPositionByAlign = sole();
+var _boundaryCheck = sole();
+var _calArrowPosition = sole();
 
 
 /**
@@ -410,13 +406,13 @@ pro[_calPopoverPositionByAlign] = function (dir, priority) {
     var secondSide;
     var optionsOffsetLeft = options.offsetLeft;
     var optionsOffsetTop = options.offsetTop;
-    var optionsArrowSize = options.arrowSize;
     var targetPositionLeft = targetPosition.left;
     var targetPositionTop = targetPosition.top;
     var targetPositionWidth = targetPosition.width;
     var targetPositionHeight = targetPosition.height;
     var popoverPositionWidth = popoverPosition.width;
     var popoverPositionHeight = popoverPosition.height;
+    var displayArrowSize = options.arrowPosition === 'none' ? 0 : arrowSize;
 
     /**
      * 靠边检测
@@ -466,49 +462,49 @@ pro[_calPopoverPositionByAlign] = function (dir, priority) {
         switch (dir) {
             case 'bottom':
                 pos.left = targetPositionLeft + targetPositionWidth / 2 - popoverPositionWidth / 2;
-                pos.top = targetPositionTop + targetPositionHeight + optionsArrowSize + optionsOffsetTop;
+                pos.top = targetPositionTop + targetPositionHeight + displayArrowSize + optionsOffsetTop;
                 break;
 
             case 'right':
-                pos.left = targetPositionLeft + targetPositionWidth + optionsArrowSize + optionsOffsetLeft;
+                pos.left = targetPositionLeft + targetPositionWidth + displayArrowSize + optionsOffsetLeft;
                 pos.top = targetPositionTop + targetPositionHeight / 2 - popoverPositionHeight / 2;
                 break;
 
             case 'top':
                 pos.left = targetPositionLeft + targetPositionWidth / 2 - popoverPositionWidth / 2;
-                pos.top = targetPositionTop - optionsArrowSize - popoverPositionHeight - optionsOffsetTop;
+                pos.top = targetPositionTop - displayArrowSize - popoverPositionHeight - optionsOffsetTop;
                 break;
 
             case 'left':
-                pos.left = targetPositionLeft - optionsArrowSize - popoverPositionWidth - optionsOffsetLeft;
+                pos.left = targetPositionLeft - displayArrowSize - popoverPositionWidth - optionsOffsetLeft;
                 pos.top = targetPositionTop + targetPositionHeight / 2 - popoverPositionHeight / 2;
                 break;
         }
     } else {
         switch (dir) {
             case 'bottom':
-                pos.top = targetPositionTop + targetPositionHeight + optionsArrowSize + optionsOffsetTop;
+                pos.top = targetPositionTop + targetPositionHeight + displayArrowSize + optionsOffsetTop;
                 firstSide = targetPositionLeft;
                 secondSide = targetPositionLeft + targetPositionWidth - popoverPositionWidth;
                 sideCheck('left', firstSide, secondSide);
                 break;
 
             case 'right':
-                pos.left = targetPositionLeft + targetPositionWidth + optionsArrowSize + optionsOffsetLeft;
+                pos.left = targetPositionLeft + targetPositionWidth + displayArrowSize + optionsOffsetLeft;
                 firstSide = targetPositionTop;
                 secondSide = targetPositionTop + targetPositionHeight - popoverPositionHeight;
                 sideCheck('top', firstSide, secondSide);
                 break;
 
             case 'top':
-                pos.top = targetPositionTop - popoverPositionHeight - optionsArrowSize - optionsOffsetTop;
+                pos.top = targetPositionTop - popoverPositionHeight - displayArrowSize - optionsOffsetTop;
                 firstSide = targetPositionLeft;
                 secondSide = targetPositionLeft + targetPositionWidth - popoverPositionWidth;
                 sideCheck('left', firstSide, secondSide);
                 break;
 
             case 'left':
-                pos.left = targetPositionLeft - optionsArrowSize - popoverPositionWidth - optionsOffsetLeft;
+                pos.left = targetPositionLeft - displayArrowSize - popoverPositionWidth - optionsOffsetLeft;
                 firstSide = targetPositionTop;
                 secondSide = targetPositionTop + targetPositionHeight - popoverPositionHeight;
                 sideCheck('top', firstSide, secondSide);
@@ -550,9 +546,6 @@ pro[_calArrowPosition] = function (side, dir) {
     var options = the[_options];
     var targetPosition = the[_targetPosition];
     var popoverPosition = the[_popoverPosition];
-    var none = {
-        display: 'none'
-    };
     var map = {
         top: the[_arrorTopEl],
         right: the[_arrorRightEl],
@@ -562,19 +555,15 @@ pro[_calArrowPosition] = function (side, dir) {
     var pos = {
         display: 'block'
     };
-    var optionsArrowSize = options.arrowSize;
     var targetPositionWidth = targetPosition.width;
     var targetPositionHeight = targetPosition.height;
     var popoverPositionWidth = popoverPosition.width;
     var popoverPositionHeight = popoverPosition.height;
+    var displayArrowSize = options.arrowPosition === 'none' ? 0 : arrowSize;
 
     object.each(map, function (key, el) {
         attribute.hide(el);
     });
-
-    if (!optionsArrowSize) {
-        return;
-    }
 
     switch (dir) {
         case 'top':
@@ -592,7 +581,7 @@ pro[_calArrowPosition] = function (side, dir) {
                     pos.left = popoverPositionWidth / 2;
                     break;
             }
-            pos.left -= optionsArrowSize;
+            pos.left -= displayArrowSize;
             break;
 
         case 'right':
@@ -610,11 +599,13 @@ pro[_calArrowPosition] = function (side, dir) {
                     pos.top = popoverPositionHeight / 2;
                     break;
             }
-            pos.top -= optionsArrowSize;
+            pos.top -= displayArrowSize;
             break;
     }
 
-    attribute.style(map[dir], pos);
+    if (options.arrowPosition !== 'none') {
+        attribute.style(map[dir], pos);
+    }
 };
 
 
