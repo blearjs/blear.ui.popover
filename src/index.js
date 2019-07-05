@@ -370,7 +370,7 @@ var _calArrowPosition = sole();
 pro[_initNode] = function () {
     var the = this;
     var node = modification.parse(template);
-    var el = selector.query(the[_options].el)[0];
+    var el = the[_options].el;
     node.id = namespace + (gid++);
     attribute.addClass(node, the[_options].addClass);
     the[_popoverEl] = modification.insert(node);
