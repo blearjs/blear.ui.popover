@@ -5,20 +5,19 @@
   display: none;
   border: 1px solid #ccc;
   background: #fff;
-  border-radius: 6px; }
+  border-radius: 6px;
+  overflow: hidden; }
   .blearui-popover-arrow {
     display: none;
     position: absolute; }
-    .blearui-popover-arrow:before,
-    .blearui-popover-arrow:after {
+    .blearui-popover-arrow:before, .blearui-popover-arrow:after {
       position: absolute;
       content: "";
-      border: 10px solid transparent; }
+      border: 10px solid rgba(0, 0, 0, 0); }
     .blearui-popover-arrow-top {
       top: -20px;
       left: 0; }
-      .blearui-popover-arrow-top:before,
-      .blearui-popover-arrow-top:after {
+      .blearui-popover-arrow-top:before, .blearui-popover-arrow-top:after {
         left: 0; }
       .blearui-popover-arrow-top:before {
         top: -1px;
@@ -29,8 +28,7 @@
     .blearui-popover-arrow-right {
       top: 0;
       right: 0; }
-      .blearui-popover-arrow-right:before,
-      .blearui-popover-arrow-right:after {
+      .blearui-popover-arrow-right:before, .blearui-popover-arrow-right:after {
         top: 0; }
       .blearui-popover-arrow-right:before {
         left: 1px;
@@ -41,8 +39,7 @@
     .blearui-popover-arrow-bottom {
       bottom: 0;
       left: 0; }
-      .blearui-popover-arrow-bottom:before,
-      .blearui-popover-arrow-bottom:after {
+      .blearui-popover-arrow-bottom:before, .blearui-popover-arrow-bottom:after {
         left: 0; }
       .blearui-popover-arrow-bottom:before {
         top: 1px;
@@ -53,8 +50,7 @@
     .blearui-popover-arrow-left {
       top: 0;
       left: -20px; }
-      .blearui-popover-arrow-left:before,
-      .blearui-popover-arrow-left:after {
+      .blearui-popover-arrow-left:before, .blearui-popover-arrow-left:after {
         top: 0; }
       .blearui-popover-arrow-left:before {
         left: -1px;
